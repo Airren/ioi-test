@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fio-deployment
+  labels:
+    app: fio
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: fio
+  template:
+    metadata:
+      annotations:
+        blockio.kubernetes.io/container.stress.rbps: '0M/4k'
+        blockio.kubernetes.io/container.stress.wbps: '5M/4k'
+      labels:
+        app: fio
+    spec:
+      containers:
+        - name: con-8
+          image: jadechu/simuworks:v5
+          resources:
+            limits:
+              cpu: 200m
+              memory: "200Mi"
+            requests:
+              cpu: 200m
+              memory: "200Mi"
+          imagePullPolicy: IfNotPresent
+          args:
+            [
+              '--filename=/tmp/test',
+              '--direct=0',
+              '--mode=norm',
+              '--time=84600,60',
+              '--size=60g',
+              '--rate=0m-2m,44m-40m',
+              '--ioengine=sync',
+              '--fdatasync=0',
+              '--rw=write',
+              '--bs=4k,4k'
+            ]
+          volumeMounts:
+            - name: fio-config-vol
+              mountPath: /tmp
+      volumes:
+        - name: fio-config-vol
+          emptyDir: {}
+      nodeSelector:
+        kubernetes.io/hostname: ioi-2
+

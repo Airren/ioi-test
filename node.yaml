@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Node
+metadata:
+  annotations:
+    flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"4e:57:b1:1a:f0:31"}'
+    flannel.alpha.coreos.com/backend-type: vxlan
+    flannel.alpha.coreos.com/kube-subnet-manager: "true"
+    flannel.alpha.coreos.com/public-ip: 10.239.241.198
+    kubeadm.alpha.kubernetes.io/cri-socket: unix:///var/run/containerd/containerd.sock
+    node.alpha.kubernetes.io/ttl: "0"
+    volumes.kubernetes.io/controller-managed-attach-detach: "true"
+  creationTimestamp: "2023-07-20T12:42:57Z"
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/os: linux
+    ioisolation: "true"
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: ioi-2
+    kubernetes.io/os: linux
+  name: ioi-2
+  resourceVersion: "85883"
+  uid: 7a7249c6-25ed-460d-9bc8-74ad34a08cfb
+spec:
+  podCIDR: 10.244.2.0/24
+  podCIDRs:
+  - 10.244.2.0/24
+status:
+  addresses:
+  - address: 10.239.241.198
+    type: InternalIP
+  - address: ioi-2
+    type: Hostname
+  allocatable:
+    cpu: "32"
+    ephemeral-storage: "884016022498"
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 131795284Ki
+    pods: "110"
+  capacity:
+    cpu: "32"
+    ephemeral-storage: 959218776Ki
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 131897684Ki
+    pods: "110"
+  conditions:
+  - lastHeartbeatTime: "2023-07-20T12:43:49Z"
+    lastTransitionTime: "2023-07-20T12:43:49Z"
+    message: Flannel is running on this node
+    reason: FlannelIsUp
+    status: "False"
+    type: NetworkUnavailable
+  - lastHeartbeatTime: "2023-07-21T02:54:01Z"
+    lastTransitionTime: "2023-07-20T12:42:57Z"
+    message: kubelet has sufficient memory available
+    reason: KubeletHasSufficientMemory
+    status: "False"
+    type: MemoryPressure
+  - lastHeartbeatTime: "2023-07-21T02:54:01Z"
+    lastTransitionTime: "2023-07-21T02:54:01Z"
+    message: kubelet has no disk pressure
+    reason: KubeletHasNoDiskPressure
+    status: "False"
+    type: DiskPressure
+  - lastHeartbeatTime: "2023-07-21T02:54:01Z"
+    lastTransitionTime: "2023-07-20T12:42:57Z"
+    message: kubelet has sufficient PID available
+    reason: KubeletHasSufficientPID
+    status: "False"
+    type: PIDPressure
+  - lastHeartbeatTime: "2023-07-21T02:54:01Z"
+    lastTransitionTime: "2023-07-20T12:43:28Z"
+    message: kubelet is posting ready status. AppArmor enabled
+    reason: KubeletReady
+    status: "True"
+    type: Ready
+  daemonEndpoints:
+    kubeletEndpoint:
+      Port: 10250
+  images:
+  - names:
+    - docker.io/bitnami/kafka@sha256:37cf6bcd02995e188a8f71e3c3708f9e7a5b3006982c51633e860394148db39f
+    - docker.io/bitnami/kafka:3.5.0-debian-11-r1
+    sizeBytes: 351703296
+  - names:
+    - docker.io/ioisolation/node-agent:release-0.2-lts
+    sizeBytes: 168158597
+  - names:
+    - docker.io/airren/grafana-with-bosun@sha256:701cf174bd9d9c65261ae20258765a75b210b8d922137a50e75613b9f4c681d2
+    - docker.io/airren/grafana-with-bosun:v0.0.2
+    sizeBytes: 98381426
+  - names:
+    - docker.io/prom/prometheus@sha256:9309deb7c981e8a94584d9ed689fd62f7ac4549d816fd3881550311cf056a237
+    - docker.io/prom/prometheus:latest
+    sizeBytes: 93719161
+  - names:
+    - gcr.io/cadvisor/cadvisor@sha256:adc29827d88730174181e9fe221938323baa6ba8c5734c2ec52aa2e86a0c303e
+    - gcr.io/cadvisor/cadvisor:v0.47.0
+    sizeBytes: 34006997
+  - names:
+    - docker.io/flannel/flannel@sha256:373a63e92c0428122a55581021eb9d3c780885fbab91c373012ec77e5c7288dc
+    - docker.io/flannel/flannel:v0.21.4
+    sizeBytes: 24252120
+  - names:
+    - docker.io/jadechu/simuworks@sha256:cb997c12292b527c2a6f2d93273324715f68efbc3513ce7267c43d8147b2f26e
+    - docker.io/jadechu/simuworks:v5
+    sizeBytes: 21902024
+  - names:
+    - registry.k8s.io/kube-proxy@sha256:6bf25f038543e1f433cb7f2bdda445ed348c7b9279935ebc2ae4f432308ed82f
+    - registry.k8s.io/kube-proxy:v1.25.3
+    sizeBytes: 20265805
+  - names:
+    - docker.io/prom/node-exporter@sha256:81f94e50ea37a88dfee849d0f4acad25b96b397061f59e5095905f6bc5829637
+    - docker.io/prom/node-exporter:latest
+    sizeBytes: 11725464
+  - names:
+    - docker.io/flannel/flannel-cni-plugin@sha256:bf4b62b131666d040f35a327d906ee5a3418280b68a88d9b9c7e828057210443
+    - docker.io/flannel/flannel-cni-plugin:v1.1.2
+    sizeBytes: 3842055
+  - names:
+    - registry.k8s.io/pause@sha256:9001185023633d17a2f98ff69b6ff2615b8ea02a825adffa40422f51dfdcde9d
+    - registry.k8s.io/pause:3.8
+    sizeBytes: 311286
+  nodeInfo:
+    architecture: amd64
+    bootID: a43b2dc3-beee-4d18-9525-81689bcee993
+    containerRuntimeVersion: containerd://1.7.0
+    kernelVersion: 5.15.0-76-generic
+    kubeProxyVersion: v1.25.3
+    kubeletVersion: v1.25.3
+    machineID: 4a6a188153194da9803ffa87aecd51ac
+    operatingSystem: linux
+    osImage: Ubuntu 22.04.2 LTS
+    systemUUID: 0bc74d56-28d4-9f0f-ff58-6bf38e1523ea

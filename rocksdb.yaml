@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rocksdb-deployment
+  labels:
+    app: rocksdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rocksdb
+  template:
+    metadata:
+      labels:
+        app: rocksdb
+      annotations:
+        blockio.kubernetes.io/container.stress.rbps: '0M/4k'
+        blockio.kubernetes.io/container.stress.wbps: '350M/4k'
+    spec:
+      containers:
+      - name: rocksdb
+        image: airren/rocksdb:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "16Gi"
+            cpu: "8"
+          limits:
+            memory: "16Gi"
+            cpu: "8"
+              #        env:
+              #        - name: INIT_ROCKSDB
+              #          value: "yes"
+              #        - name: MYSQL_DATABASE
+              #          value: "rocks_demo"
+              #        - name: MYSQL_ROOT_PASSWORD
+              #          value: "123456"
+        command:
+        - sh
+        - -c
+        - sleep infinity
+      nodeSelector:
+        kubernetes.io/hostname: ioi-2
+
+

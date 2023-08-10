@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-client-1-job
+  labels:
+    app: kafka-client-1
+spec:
+  parallelism: 10
+    # selector:
+    #   matchLabels:
+    #     app: kafka-client-1
+  template:
+    metadata:
+      annotations:
+        blockio.kubernetes.io/container.stress.rbps: '0M/4k'
+        blockio.kubernetes.io/container.stress.wbps: '2M/4k'
+      labels:
+        app: kafka-client-1
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: kafka-client-1
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+        image: confluentinc/cp-kafka:6.1.0
+        command:
+        - sh
+        - -c
+        - "kafka-producer-perf-test --topic $POD_NAME --throughput 20000 --num-records 7200000 --record-size 1024  --producer-props acks=all bootstrap.servers=kafka-1.default.svc.cluster.local:9092 --print-metrics"
+          # - "kafka-producer-perf-test --topic $POD_NAME --throughput -1 --num-records 7200000 --record-size 1024  --producer-props acks=all bootstrap.servers=kafka-empty-dir.default.svc.cluster.local:9092 --print-metrics"
+          # - "kafka-producer-perf-test --topic $POD_NAME --throughput -1 --num-records 40000 --record-size 524288  --producer-props acks=all bootstrap.servers=kafka-empty-dir.default.svc.cluster.local:9092 --print-metrics"
+      nodeSelector:
+        kubernetes.io/hostname: ioi-1
