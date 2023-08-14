@@ -11,9 +11,9 @@ spec:
       app: fio
   template:
     metadata:
-      annotations:
-        blockio.kubernetes.io/container.stress.rbps: '0M/4k'
-        blockio.kubernetes.io/container.stress.wbps: '160M/4k'
+      #annotations:
+      #  blockio.kubernetes.io/container.stress.rbps: '0M/4k'
+      #  blockio.kubernetes.io/container.stress.wbps: '160M/4k'
       labels:
         app: fio
     spec:
@@ -35,7 +35,7 @@ spec:
               '--mode=norm',
               '--time=84600,60',
               '--size=60g',
-              '--rate=0m-160m,44m-40m',
+              '--rate=0m-200m,44m-40m',
               '--ioengine=sync',
               '--fdatasync=0',
               '--rw=write',
