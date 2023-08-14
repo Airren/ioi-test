@@ -1,9 +1,12 @@
 #!/bin/bash
-# fio_deployment_0.yaml  kafka-job.yaml
+
+helm install kafka-1 ./kafka-1
 
 for ((i=1; i<=10; i++))
 do
-  echo "------------ kafka as nn  ioi case$i benchmark --------------------"
+  mkdir -p ./result
+  resultPath=./result/$(basename $0)-$i.log
+  echo "------------ benchmark-$1: $0 --------------------"
   kubectl apply -f fio_deployment_200M_x4.yaml
   sleep 1m
   kubectl apply -f kafka-1-job.yaml
@@ -13,7 +16,7 @@ do
   sleep 1m
   kubectl get po | grep kafka-client-1-job
 
-  kubectl  get po -A |grep "kafka-client-1-job" | awk '{print $2}'| xargs -n1 kubectl logs |grep "7200000 records sent" >  ./result/$0-$i.log
+  kubectl  get po -A |grep "kafka-client-1-job" | awk '{print $2}'| xargs -n1 kubectl logs |grep "7200000 records sent" >  $resultPath
 
   kubectl delete  -f fio_deployment_200M_x4.yaml
   sleep 20s
@@ -22,3 +25,5 @@ do
   sleep 6m
 
 done
+
+helm delete kafka-1
